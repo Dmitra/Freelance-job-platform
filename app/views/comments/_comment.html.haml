@@ -1,0 +1,16 @@
+- brief = false if brief.nil?
+%div{ :class => cycle('odd', 'even'), :id => "comment_#{comment.id}" }
+  - if brief
+    %div{:class => 'comment_brief'}
+      Update
+  - else
+    %div{:class => [("comment_owner" if comment.user == current_user), ("comment_customer" if comment.user == comment.commentable.user), ("comment_admin" if comment.user.admin?)]}
+      = h comment.title
+      by
+      %span
+        = link_to comment.user.login, user_path(comment.user)
+  on
+  %span
+    = comment.created_at.to_s(:datetime)
+%p
+  = h comment.comment

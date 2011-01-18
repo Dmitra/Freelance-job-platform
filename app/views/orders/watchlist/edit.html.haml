@@ -1,0 +1,4 @@
+- title "My Watchlist"
+%h2
+  Watchlist
+= render :partial => 'orders', :locals => {:orders => @watchlist, :table => 'watchlist', :path_to_update => watch_all_path}

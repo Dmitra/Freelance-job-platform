@@ -1,0 +1,4 @@
+page.replace_html "status_#{@solution.id}", @solution.workflow_state
+page.replace_html "evaluate_#{@solution.id}", :partial => 'rating', :object => @solution
+page.replace_html :notice, flash[:notice]
+flash.discard

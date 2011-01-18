@@ -1,0 +1,24 @@
+- title "Edit Order"
+%h2
+  Edit Order
+- form_for(:order, :html => { :method => :put, :multipart => true}, :url => order_path(:order_id => params[:order_id])) do |f|
+  - unless @order.edit_restricted?
+    = render :partial => 'form1', :locals => {:f => f}
+  - else
+    %p
+      %span.label
+        Category:
+      %span#categories
+        = h @order.categories[0].name
+    %p
+      Name:
+      %span#name
+        = @order.name
+    %p
+      Description:
+      %span#description
+        = @order.description
+  = render :partial => "comments/comment", :collection => @comments, :locals => {:brief => true}
+  = render :partial => 'comments/add', :locals => {:order => @order, :brief => true}
+  = render :partial => 'form2', :locals => {:f => f}
+  = submit_tag "Update"

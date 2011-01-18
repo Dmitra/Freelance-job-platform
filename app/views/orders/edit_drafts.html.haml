@@ -1,0 +1,4 @@
+- title "My Drafts"
+%h2
+  Drafts
+= render :partial => 'orders', :locals => {:orders => @drafts, :table => 'drafts', :path_to_update => destroy_all_path}

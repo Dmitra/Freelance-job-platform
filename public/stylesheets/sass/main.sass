@@ -1,0 +1,161 @@
+!white = #FFF
+body
+  margin: 40px
+
+
+a
+  color: #FF0000
+
+  &:hover
+    color: #0000FF
+
+
+#menu
+  text-align: right
+  margin-right: 40px
+  margin-bottom: 10px
+
+
+#bottom
+  text-align: center
+
+
+div
+  &.search
+    float: right
+
+  &.clear
+    clear: both
+
+  &.rating
+    display: inline
+
+  &.rating_bold
+    display: inline
+    font-weight: bold
+    font-size: larger
+
+  &.evaluate
+    display: inline
+
+  &.status
+    font-weight: bolder
+
+
+span
+  &.datetime
+    display: inline
+    font-style: italic
+
+  &.label
+    border-left: groove
+    border-bottom: groove
+    border-top: groove
+    border-width: thin
+
+  &.details
+    background-color: #ccddff
+
+
+#newsolution
+  text-align: right
+  margin-right: 50px
+
+
+th
+  background-color: #000
+  color: #FFF
+
+
+tr
+  &.odd
+    background-color: #FFF
+
+  &.even
+    background-color: #CCC
+
+
+td.groupStatus
+  background-color: #0099ff
+  text-align: center
+  font-weight: bold
+
+
+table
+  &#orders
+    width: 100%
+    background-color: #FFF
+    border: 1px solid #000
+
+    td
+      &.title
+        width: 50%
+
+      &.solution
+        width: 20%
+        text-align: center
+
+      &.lastreply
+        width: 30%
+        text-align: left
+
+  &#solutions
+    width: 100%
+    background-color: #FFF
+    border: 1px solid #000
+
+    td
+      &.title
+        width: 50%
+
+      &.author
+        width: 20%
+        text-align: center
+
+      &.reply
+        width: 10%
+        text-align: center
+
+      &.lastreply
+        width: 20%
+        text-align: center
+
+  &#replies
+    width: 100%
+    background-color: #FFF
+    border: 1px solid #000
+
+    td
+      &.author
+        width: 20%
+        vertical-align: top
+
+      &.body
+        width: 80%
+
+
+.ordername
+  font-size: 1.1em
+
+
+.orderdescription
+  font-size: 0.7em
+  padding-top: 0.4em
+
+
+.ordertime
+  font-size: 0.7em
+  color: #777
+
+
+#error, #errorExplanation, .formError
+  color: #FF0000
+
+
+span.field_error
+  border: solid
+  border-color: #FF0000
+
+
+#notice
+  color: #009900

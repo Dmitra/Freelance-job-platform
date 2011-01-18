@@ -1,0 +1,9 @@
+order = Order.find(4)
+login "user"
+
+open("/order/#{order.id}")
+click "link=Cancel Order"
+assert_confirmation('*')
+wait_for_page_to_load 3000
+verify_text "notice", "Order was successfully cancelled"
+verify_element_not_present "link=#{order.name}"

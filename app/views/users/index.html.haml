@@ -1,0 +1,29 @@
+%h2
+  All Users
+%table
+  %tr
+    %th
+      Username
+    %th
+      Email
+    %th
+      Enabled?
+    %th{ :colspan => "4" }
+      Delete
+  - form_tag enable_users_path, :method => :put do
+    - for user in @users
+      %tr{ :class => cycle('odd', 'even') }
+        %td
+          = h user.login
+        %td
+          = h user.email
+        %td
+          = user.enabled ? 'yes' : 'no'
+          - unless user == current_user
+            = check_box_tag "user_ids[]", user.id, user.enabled
+    %tr
+      %td
+      %td
+      %td
+        = submit_tag "Update"
+= will_paginate @users

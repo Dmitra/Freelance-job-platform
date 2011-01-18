@@ -1,0 +1,26 @@
+- title "Solutions"
+%h2
+  Solutions
+.search
+  - form_tag orders_path, :method => 'get' do
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search", :name => nil
+    By Body or Description
+%table
+  %tr
+    %th
+      Order
+    %th
+      Status
+    %th
+      Body
+  - for solution in @solutions
+    %tr{ :class => cycle('odd', 'even') }
+      %td
+        = link_to solution.order.name, order_path(solution.order)
+      %td
+        = solution.status
+      %td
+        = solution.body
+= will_paginate @solutions
+%hr

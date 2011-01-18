@@ -1,0 +1,32 @@
+%h3
+  Solution:
+  = link_to h(solution.body), order_solution_path(solution.order, solution)
+= if solution.comments.count != 0 then "has #{solution.comments.count} comments" end
+.status{ :id => "status_#{solution.id}" }
+  Status:
+  = solution.workflow_state
+- if @order.active?
+  .evaluate{ :id => "evaluate_#{solution.id}" }
+    Rating:
+    - for mark in 1..3
+      - if solution.rating == mark then style = "rating_bold" else style = "rating" end
+      %div{ :class => style, :id => "rating_#{solution.id}_#{mark}" }
+        = link_to_remote "[#{mark}]", :url => evaluate_path(solution.order, solution, mark)
+- else
+  .mark
+    Rating:
+    = solution.rating
+.author
+  By:
+  = link_to solution.user.login, user_path(solution.user)
+%div
+  %span.label
+    Created at:
+  %span.datetime
+    = solution.created_at.to_s(:short)
+.count
+  Comments:
+  = solution.comments_count
+%div
+  Description:
+  = h solution.description

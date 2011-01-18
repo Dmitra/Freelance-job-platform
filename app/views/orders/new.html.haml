@@ -1,0 +1,12 @@
+- title "Place Order"
+%h2
+  Place Order
+- form_for(:order, :html => {:multipart => true}, :url => orders_path) do |f|
+  = render :partial => 'form1', :locals => {:f => f}
+  = render :partial => 'form2', :locals => {:f => f}
+  %p
+    %a
+      Terms of Use
+    = error_message_on :order, :eula
+    = f.check_box :eula
+  = submit_tag "Next"

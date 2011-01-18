@@ -1,0 +1,13 @@
+#mailbox_list{ :style => "border:1px solid #aaa; float:right; margin:1em; padding:1em; width:20%" }
+  %p
+    = link_to "Compose", new_sent_path
+  %p
+    %strong
+      Mailboxes
+  %ul
+    %li
+      = link_to "Inbox", inbox_path
+    %li
+      = link_to "Sent", :controller => "sent", :action => "index"
+    %li
+      = link_to "Trash", trash_mailbox_path

@@ -1,0 +1,5 @@
+Rating:
+- for mark in 1..5
+  - if mark == @solution.rating then style = "rating_bold" else style = "rating" end
+  %div{ :class => style, :id => "rating_#{@solution.id}_#{mark}" }
+    = link_to_remote "[#{mark}]",:url => evaluate_path(@solution.order, @solution, mark)

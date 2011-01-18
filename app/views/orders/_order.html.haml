@@ -1,0 +1,16 @@
+- columns.each do |column|
+  %td
+    - case column
+      - when 'name'
+        = link_to order.name, order_path(order) 
+      - when 'categories.name'
+        = h order.categories.map(&:name).join(', ')
+      - when 'term'
+        - if order.expired?
+          closed
+        - else
+          = time_to_now(order.end_time)
+      - when 'updated_at'
+        = order.updated_at.to_s(:datetime)
+      - else
+        = order.instance_eval(singularize(column))

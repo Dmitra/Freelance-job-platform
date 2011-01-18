@@ -1,0 +1,5 @@
+user = User.find(2)
+login user.login
+options = {:user => user.login, :name => "New order1", :desc => "New order description1", :cost => 1, :term => (Time.now+86400).to_s(:datetime), :status => Order::STATUS::DRAFT, :privacy => Order::PRIVACY::OPEN, :categories => %w[book company zoom]}
+order_create options
+order_view options

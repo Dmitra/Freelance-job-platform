@@ -1,0 +1,6 @@
+order_with_solution = Order.find(1)
+login "user"
+
+open('/order/destroy/'+order_with_solution.id.to_s)
+verify_text "error", "Access violation. You can't cancel order with solution"
+verify_text_present order_with_solution.description

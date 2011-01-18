@@ -1,0 +1,11 @@
+active_order = Order.find_by_name("First sample order")
+done_order = Order.find_by_name("Wanna logotype2")
+open '/'
+
+verify_title 'Ambitexter - All Active Orders'
+verify_text "xpath=(//*[@class='groupStatus'])[1]", Order::STATUS::ACTIVE
+verify_text "xpath=(//*[@class='groupStatus'])[2]", Order::STATUS::DONE
+verify_element_not_present "xpath=(//*[@class='groupStatus'])[3]"
+
+verify_element_present "//a[@href='/users/#{active_order.user.id}']"
+verify_element_present "//a[@href='/users/#{done_order.user.id}']"

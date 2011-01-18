@@ -1,0 +1,63 @@
+!!!
+%html{ "xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml" }
+  %head
+    %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }
+    = stylesheet_link_tag 'main'
+    = javascript_include_tag :defaults
+    = javascript_include_tag "calendar_date_select/calendar_date_select", "multifile"
+    = stylesheet_link_tag "calendar_date_select/default"
+    %title
+      = SITE_NAME
+      \-
+      = yield(:title) || "Place Order or suggest Solution"
+  %body
+    #top
+      #title
+        %h1
+          = link_to SITE_NAME, root_path
+      #menu
+        - if logged_in?
+          = link_to current_user.login.capitalize, show_user_path(current_user.login)
+          %span#finance
+            = link_to "Your money: #{current_user.finance.nil? ? 0 : current_user.finance.quantity}", add_finance_path
+          = link_to 'My Account', show_user_path(current_user.login)
+          = link_to "My Orders", my_orders_path
+          = link_to "Inbox", inbox_path
+          = link_to 'Log Out', logout_url
+          #messages
+          - if current_user.admin?
+            = link_to 'Administer Users', users_path
+        - else
+          = link_to 'Log In', new_session_path
+          = link_to 'Sign Up', new_user_path
+    #middle
+      #flash
+        %p#error
+          = flash[:error]
+        %p#notice
+          = flash[:notice]
+      #content
+        = yield
+        %a
+          About Us
+        %a
+          How it works
+        %a
+          Help
+        %a
+          FAQ
+        %a
+          Contact Us
+        %a
+          News
+        %a
+          Agreement
+        %a
+          Uservoice
+        %a
+          Rss feeds
+    .clear
+    #bottom
+      Powered by
+      %a{ :href => "http://CubicStudio.com.ua" }
+        CubicStudio

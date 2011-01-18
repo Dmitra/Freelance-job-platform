@@ -1,0 +1,15 @@
+%h2
+  Contributors of
+  = h @user.login.capitalize
+%h3
+  Manage contributors:
+%table
+  %tr
+    %th
+      Username
+    %th
+      Order
+    %th
+      Delete
+  = render :partial => 'users/assoc', :collection => @contributorship
+- will_paginate @contributorship

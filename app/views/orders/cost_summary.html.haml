@@ -1,0 +1,20 @@
+%table
+  %tr
+    %th
+      Category
+    %th
+      Minimum
+    %th
+      Recommended
+    %th
+      Maximum
+  - Category.all.each do |category|
+    %tr
+      %td
+        = category.name
+      %td
+        = Category.min_cost(category)
+      %td
+        = category.recommended_cost
+      %td
+        = Category.max_cost(category)

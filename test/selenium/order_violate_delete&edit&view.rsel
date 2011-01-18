@@ -1,0 +1,7 @@
+login "user"
+open('/order/destroy/3')
+verify_text_present "permission_denied"
+open('/order/edit/3')
+verify_text_present "permission_denied"
+open('/order/9')
+verify_text_present "permission_denied"

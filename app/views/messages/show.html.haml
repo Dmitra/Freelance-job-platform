@@ -1,0 +1,28 @@
+%h2
+  = h @message.subject
+%p
+  %strong
+    From:
+  = h @message.author.login
+%p
+  %strong
+    To:
+  = h @message.recipients.map(&:login).to_sentence
+%p
+  %strong
+    Received:
+  = @message.created_at.to_s(:long)
+%pre
+  = h @message.body
+%p
+  = link_to "Reply", reply_message_path(@message)
+  |
+  = link_to "Reply All", reply_all_message_path(@message)
+  |
+  = link_to "Forward", forward_message_path(@message)
+  |
+  - unless @message.deleted
+    = link_to "Delete", message_path(@message), :method => "delete"
+  - else
+    = link_to "Undelete", undelete_message_path(@message), :method => "put"
+  

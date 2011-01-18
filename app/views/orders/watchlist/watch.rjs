@@ -1,0 +1,2 @@
+page.replace_html "bookmark_link", :partial => 'orders/watchlist/link', :locals => {:include => @include}
+page.replace_html "bookmark_image", :partial => 'orders/watchlist/image', :locals => {:include => @include}

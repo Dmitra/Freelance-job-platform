@@ -1,0 +1,47 @@
+- title "My account"
+%h2
+  User:
+  = h @user.login
+.avatar
+  = image_tag @user.avatar
+= link_to 'Edit Account', edit_user_path(current_user)
+= link_to 'Change Password', change_password_path
+= link_to "My Orders", user_orders_path(@user)
+= link_to "My Contributors", contributors_path
+- unless @user.finance.nil?
+  %p
+    Paypal account:
+    = @user.finance.paypal
+%p
+  Joined on:
+  = @user.created_at.to_s(:long)
+%p
+  Surname:
+  = h @user.surname
+%p
+  Birth Date:
+  = @user.birth_date
+%p
+  Gender:
+  = @user.gender ? 'Male' : 'Female'
+%p
+  City:
+  = h @user.city
+%p
+  Country:
+  = h @user.country
+%p
+  About:
+  = h @user.about
+%p
+  Homepage
+  = link_to h(@user.homepage), h(@user.homepage)
+- unless @user.assets.empty?
+  %p
+    %b
+      Attached Files:
+    #attachment_list
+      = render :partial => "assets/attachment", :collection => @user.assets
+%p
+  Email me about important updates:
+  = @user.spam ? 'YES' : 'NO'

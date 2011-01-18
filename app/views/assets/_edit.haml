@@ -1,0 +1,20 @@
+Max
+= attachable.class::Max_Attachments
+attachments each under
+= attachable.class::Max_Attachment_Size/1.megabyte
+MB:
+- if @assets then @assets.each{|a| a.errors.each_full {|msg|
+  .formError
+    = a.name + " " + msg
+  - }}
+- if attachable.allowed_attachments < 1
+  %input#newfile_data{ :type => "file", :disabled => "" }
+- else
+  %input#newfile_data{ :type => "file" }
+#attachment_list
+  %ul#pending_files
+%script{ :type => "text/javascript" }
+  var multi_selector = new MultiSelector($('pending_files'),
+  = attachable.allowed_attachments
+  );
+  multi_selector.addElement($('newfile_data'));

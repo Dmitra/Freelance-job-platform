@@ -1,0 +1,9 @@
+page.remove "attachment_#{@asset.id}"
+
+# update form only on edit page
+if @edit 
+  page.assign 'multi_selector.max', @asset.allowed_attachments
+  if @asset.allowed_attachments > 0
+    page << "if ($('newfile_data').disabled) { $('newfile_data').disabled = false };"
+  end
+end

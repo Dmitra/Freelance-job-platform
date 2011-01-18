@@ -1,0 +1,11 @@
+development: &defaults
+  domain: localhost:3000
+  session_domain: localhost
+  pagination_per_page_count: 5
+  users_per_page_count: 3
+  orders_per_page_count: 5
+  sender_mail: admin@cubicstudio.com.ua
+test:
+  <<: *defaults
+production:
+  <<: *defaults  

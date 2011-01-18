@@ -1,0 +1,11 @@
+- unless comments.nil?
+  %h3
+    Comments:
+    = comments.length
+    = link_to 'all', order_path(order)
+    = link_to 'my', order_path(order, :filter => 'my')
+    = link_to 'customer', order_path(order, :filter => 'customer')
+    = link_to 'admin', order_path(order, :filter => 'admin')
+  #comments
+    = render :partial => "comments/comment", :collection => comments
+

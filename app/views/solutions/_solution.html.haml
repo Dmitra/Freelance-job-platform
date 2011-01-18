@@ -1,0 +1,15 @@
+- columns.each do |column|
+  %td
+    - case column
+      - when 'body'
+        = link_to solution.body, order_solution_path(solution.order, solution) 
+      - when 'created_at'
+        = solution.created_at.to_s(:datetime)
+      - when 'rating'
+        - if solution.rating.zero?
+          = link_to 'Evaluate', order_solution_path(solution)
+        - else
+          = solution.rating
+      - else
+        = solution.instance_eval(singularize(column))
+

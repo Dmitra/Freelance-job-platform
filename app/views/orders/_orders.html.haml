@@ -1,0 +1,23 @@
+- path_to_update = false if path_to_update.nil?
+- table = 'main' if table.nil?
+%table.sortableTable
+  %thead
+    %tr.tableHeaderRow
+      = render_headings(Order.headings(table), table, path_to_update)
+
+  - if orders.size == 0
+    %tr
+      %td{ :colspan => Order.headings(table).size}
+        No items in the list
+  - else
+    - if path_to_update
+      - form_tag path_to_update
+    - orders.each do |order|
+      %tr{ :class => [cycle('odd', 'even'), (" bold" if order.font), (" color" if order.color)]}
+        - if path_to_update
+          %td
+            = check_box_tag "order_ids[]", order.id
+        = render :partial => 'order', :locals => {:order => order, :columns => Order.table_columns(table)}
+    - if path_to_update
+      = submit_tag "Delete", :confirm => "Do U really want to delete selected items?"
+= will_paginate orders, :params => {:sort => {:table => table}}

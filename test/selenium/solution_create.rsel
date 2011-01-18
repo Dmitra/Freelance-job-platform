@@ -1,0 +1,11 @@
+order = Order.find(2)
+login "user"
+open "/order/#{order.id}"
+opt = {:order => order.name, :status => Solution::STATUS::NEW, :body => "New solution text body", :desc => "New solution text description", :created_at => Time.now}
+
+click_and_wait "link=Make new Solution"
+type "solution_body", opt[:body]
+type "solution_description", opt[:desc]
+click_and_wait "name=commit"
+
+solution_view opt

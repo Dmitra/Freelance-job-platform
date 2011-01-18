@@ -1,0 +1,20 @@
+order = Order.find(1)
+opt = {:order => order, :cost => (order.cost + 1), :term => (Time.now + 86400).to_s(:datetime), :privacy => Order::PRIVACY::PRIVATE}
+
+login "user"
+click_and_wait "link=#{order.name}"
+click_and_wait "link=Edit"
+verify_title "*Edit Order"
+verify_element_not_present "order_name"
+verify_element_not_present "order_description"
+verify_element_not_present "category_id"
+type "order_cost", order.cost - 1
+click_and_wait "name=commit"
+verify_text "error", "U can't descrease cost of the order with solution"
+type "order_term", opt[:term]
+select "order_privacy", opt[:privacy]
+type "order_cost", opt[:cost]
+click_and_wait "name=commit"
+verify_text "notice", "Order was successfully updated."
+order_view opt
+finance_view({:finance => order.user.finance, :quantity => order.user.finance.quantity - 1 })

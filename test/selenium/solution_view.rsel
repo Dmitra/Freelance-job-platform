@@ -1,0 +1,7 @@
+login "user"
+order = Order.find(2)
+solution = order.solutions[0]
+open "/order/#{order.id}"
+
+click_and_wait "link="+solution.body
+solution_view({:order => order.name, :body => solution.body, :desc => solution.description, :status => solution.status, :created_at => solution.created_at, :updated_at => solution.updated_at})

@@ -1,0 +1,42 @@
+- title("Solution for #{@solution.order.name}")
+%h2#body
+  = h @solution.body
+%h3
+  Solution for Order:
+  = link_to @solution.order.name, order_path(@solution.order)
+%div
+  - if @solution.acceptable_by?(current_user)
+    = link_to 'Accept Solution', operate_path(@solution.order, @solution.id, :operation => 'accept')
+    = link_to 'Refuse Solution', operate_path(@solution.order, @solution.id, :operation => 'refuse')
+  - elsif @solution.deletable_by?(current_user)
+    = link_to 'Delete', order_solution_path, :method => :delete, :confirm => 'Do U really want to delete Solution?'
+    - elsif @solution.order.active?
+      = link_to 'Restore', operate_path(@solution.order, @solution, :operation => 'restore')
+#status.status
+  Status:
+  = @solution.workflow_state
+%div
+  %span.label
+    Created at:
+  %span#created_at.datetime
+    = @solution.created_at.to_s(:datetime)
+%div
+  %span.label
+    Edited at:
+  %span#updated_at.datetime
+    = @solution.updated_at.to_s(:datetime)
+%div
+  %span.label
+    Description:
+  #description
+    = h @solution.description
+%div
+  %span.label
+    Attachments:
+  - unless @solution.assets.empty?
+    %p
+      %b
+        Attached Files:
+      #attachment_list
+        = render :partial => "assets/attachment", :collection => @solution.assets
+  

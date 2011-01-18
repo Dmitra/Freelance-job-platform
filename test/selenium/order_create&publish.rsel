@@ -1,0 +1,6 @@
+user = User.find(2)
+login user.login
+options = {:publish => true, :user => user.login, :name => "New order", :desc => "New order description", :cost => 1, :term => (Time.now+86400).to_s(:datetime), :status => Order::STATUS::ACTIVE, :privacy => Order::PRIVACY::GENERAL, :categories => %w[book company zoom]}
+order_create options
+order_view options
+finance_view({:quantity => user.finance.quantity-1, :paypal => user.finance.paypal})

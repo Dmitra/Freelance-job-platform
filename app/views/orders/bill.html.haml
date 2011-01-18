@@ -1,0 +1,68 @@
+- title "Bill Order"
+%h2
+  Bill for order "
+  = @order.name
+  "
+%table
+  %tr
+    %th
+      Product Name
+    %th
+      Amount
+  %tr
+    %td
+      Order #
+      = @order.id
+    %td
+      = @order.cost
+  - if @order.urgent?
+    %tr
+      %td
+        Urgency
+      %td
+        = Order::CostUrgency
+  - if @order.private?
+    %tr
+      %td
+        Privacy
+      %td
+        = Order::CostPrivacy
+  - if @order.font
+    %tr
+      %td
+        Bold font
+      %td
+        = Order::FONT
+  - if @order.color
+    %tr
+      %td
+        Color font
+      %td
+        = Order::COLOR
+  %tr
+    %td
+      Comission
+    %td
+      = @order.commission
+  %tr
+    %td
+      Total
+    %td
+      = @order.total_cost
+%table
+  %tr
+    %th{ :rowspan => 3 }
+      Choose pay method:
+    %td
+      %input{ :checked => "checked", :type => "radio" }
+      PayPal
+  %tr
+    %td
+      %input{ :type => "radio" }
+      Credit card
+  %tr
+    %td
+      %input{ :type => "radio" }
+      Site account
+= button_to 'Pay', publish_path(@order)
+= button_to 'Back', order_path(@order), :method => :get

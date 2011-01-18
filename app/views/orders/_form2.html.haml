@@ -1,0 +1,65 @@
+%ul
+  %li
+    Term:
+    = link_to_function("[?]", nil, :id => "more4") do |page| page.visual_effect(:toggle_appear, "d4") end
+    %span#d4.details{ :style => "display:none" }
+      Term details
+    %p
+      = f.radio_button :term, 7
+      1 week
+      = f.calendar_date_select :term, :valid_date_check => "date.stripTime() > ((new Date()).getDate()+7).stripTime()"
+      = link_to_function "Test", "alert((new Date()).setDate((new Date()).getDate() + 7))"
+      = ((Time.now.to_datetime) +7).to_s(:datetime)
+    %p
+      = f.radio_button :term, 3
+      3 days
+      = ((Time.now.to_datetime) +3).to_s(:datetime)
+  %li
+    Privacy:
+    = link_to_function("[?]", nil, :id => "more5") do |page| page.visual_effect(:toggle_appear, "d5") end
+    %span#d5.details{ :style => "display:none" }
+      Privacy details
+    %p
+      = f.radio_button :privacy, Order::PRIVACY::OPEN, :onclick => "showPrivate(false)"
+      Open
+    %p
+      <input id="order_privacy" type="radio" onclick="showPrivate(true)"
+      - if @order.privacy != Order::PRIVACY::OPEN
+        checked="checked"
+      \/> Private
+    %ul#status_private{ :style => "display:none" }
+      %li
+        = f.radio_button :privacy, Order::PRIVACY::GENERAL
+        General
+      %li
+        = f.radio_button :privacy, Order::PRIVACY::PRIVATE
+        Private
+      %li
+        = f.radio_button :privacy, Order::PRIVACY::RESTRICTED
+        Restricted
+      %li
+        = f.radio_button :privacy, Order::PRIVACY::TOPLIST
+        Toplist
+  %li
+    Cost:
+    = error_message_on :order, :cost
+    = f.text_field :cost, :size => 20, :onKeyUp => "updateCostDependency(this)"
+    %div
+      Commission (10%):
+      %span#commission
+        = @order.commission
+    = link_to_function("[?]", nil, :id => "more6") do |page| page.visual_effect(:toggle_appear, "d6") end
+    %span#d6.details{ :style => "display:none" }
+      Cost details
+    = link_to "Recommended cost", cost_summary_path
+  %h3
+    Advertising:
+    = link_to_function("[?]", nil, :id => "more7") do |page| page.visual_effect(:toggle_appear, "d7") end
+    %span#d7.details{ :style => "display:none" }
+      Advertising details
+  %li
+    = f.check_box :font
+    Emphasize with bold font - $1
+  %li
+    = f.check_box :color
+    Emphasize with color - $2

@@ -1,0 +1,44 @@
+- title "About User: #{@user.login}"
+%h2
+  User:
+  = h @user.login
+.avatar
+  = image_tag @user.avatar
+- unless @user.orders.empty?
+  = link_to "Show all orders of #{h @user.login}", user_orders_path(@user)
+- unless @user.solutions.empty?
+  = link_to "Show all solutions of #{h @user.login}", solutions_path(@user)
+- unless @user.is_contributor?(current_user)
+  = link_to "Invite this user as contributor", create_contributor_path(:user_id => @user.id)
+- else
+  = link_to "Delete", delete_contributorship_path(@user)
+%p
+  Joined on:
+  = @user.created_at.to_s(:long)
+%p
+  Surname:
+  = h @user.surname
+%p
+  Years old:
+  = @user.years_old
+%p
+  Gender:
+  = @user.gender ? 'Male' : 'Female'
+%p
+  City:
+  = h @user.city
+%p
+  Country:
+  = h @user.country
+%p
+  About:
+  = h @user.about
+%p
+  Homepage
+  = link_to h(@user.homepage), h(@user.homepage)
+- unless @user.assets.empty?
+  %p
+    %b
+      Attached Files:
+    #attachment_list
+      = render :partial => "orders/attachment", :collection => @user.assets

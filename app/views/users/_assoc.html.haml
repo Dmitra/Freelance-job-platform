@@ -1,0 +1,7 @@
+%tr{ :class => cycle('odd', 'even') }
+  %td
+    = link_to h(assoc.contributor.login), user_path(assoc.contributor)
+  %td
+    = assoc.contribution.blank? ? "" : link_to(assoc.contribution.name, order_path(assoc.contribution))
+  %td
+    = link_to "Delete", delete_contributorship_path(assoc.id)

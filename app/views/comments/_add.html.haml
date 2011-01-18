@@ -1,0 +1,13 @@
+- brief = false if brief.nil?
+- if order.commentable_by?(current_user)
+  = link_to_function("Add comment", :id => "comment_link") do |page|  page[:add_comment].toggle; page << "this.innerHTML = (this.innerHTML == 'Add comment' ? 'Hide' : 'Add comment')" end
+  #add_comment{ :style => "display:none;" }
+    - form_remote_for(:comment, :url => order_comments_path(order)) do |f|
+      - unless brief
+        %p
+          Title:
+          = f.text_field :title, :size => 15
+      %p
+        Comment:
+        = f.text_area :comment, :rows => 4, :cols => 60
+      = submit_tag "Add Comment"

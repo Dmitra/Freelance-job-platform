@@ -1,0 +1,5 @@
+#TODO bypass activation
+open "/activate/"+User.find_by_login("Dmitra").activation_code
+assert_text_present "Your account has been activated! You can now login."
+login "Dmitra"
+logout

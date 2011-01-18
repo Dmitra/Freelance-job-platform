@@ -1,0 +1,20 @@
+%h2
+  = h @folder.name
+%table{ :border => "1" }
+  %tr
+    %th
+      From
+    %th
+      Subject
+    %th
+      Received
+  - for message in @messages
+    %tr
+      %td
+        = h message.author.login
+      %td
+        = link_to h(message.subject), message_path(message)
+      %td
+        = distance_of_time_in_words(message.created_at, Time.now)
+        ago
+= will_paginate @messages

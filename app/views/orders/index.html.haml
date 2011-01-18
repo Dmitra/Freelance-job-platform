@@ -1,0 +1,17 @@
+- title "All Active Orders"
+%h2
+  All Active Orders
+.search
+  - form_tag orders_path, :method => 'get' do
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search", :name => nil
+  By Name or Description
+
+- if logged_in?
+  %h3
+    = link_to 'Place New Order', new_order_path
+
+= link_to "ACTIVE", orders_path
+= link_to "DONE", orders_path(:status => Order::STATUS::DONE)
+= render :partial => 'orders', :locals => {:orders => @orders, :table => 'main'}
+%hr

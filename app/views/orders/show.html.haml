@@ -1,0 +1,88 @@
+- title "Order: #{@order.name}"
+#status.status
+  %span.label
+    Status:
+  = @order.workflow_state
+%p
+  %span.label
+    Category:
+  %span#categories
+    = h @order.categories.map(&:name).join(', ')
+%h2
+  - if @order.user != current_user
+    %span#bookmark_image
+      = render :partial => "orders/watchlist/image", :locals => {:include => current_user.watchlist.include?(@order)}
+  Order:
+  = @order.name
+- if @order.user != current_user
+  %p
+    %span.label
+      Owned by:
+    %span#owner
+      = link_to @order.user.login, user_path(@order.user)
+Description:
+%p#description
+  = @order.description
+  #comments_brief
+    = render :partial => "comments/comment", :collection => @comments_brief, :locals => {:brief => true}
+- unless @order.assets.empty?
+  %p
+    %b
+      Attached Files:
+    #attachment_list
+      = render :partial => "assets/attachment", :collection => @order.assets
+%p
+  %span.label
+    Created at:
+  %span#created_at.datetime
+    = @order.created_at.to_s(:datetime)
+%p
+  %span.label
+    The End term:
+  %span#term.datetime
+    = @order.end_time.to_s(:datetime)
+#privacy.status
+  %span.label
+    Privacy:
+  = @order.privacy
+%p
+  %span.label
+    Cost:
+  %span#cost
+    = @order.cost
+-if @order.advertisement
+  Advertisement:
+- if @order.font
+  %p
+    Bold font: Yes 
+- if @order.color
+  %p
+    Color font: Yes
+- if @order.editable_by?(current_user)
+  = link_to 'Edit', edit_order_path(@order)
+- if @order.publishable_by?(current_user)
+  = button_to 'Publish', bill_path(@order)
+
+= render :partial => 'comments/add', :locals => {:order => @order}
+
+- if @order.solvable_by?(current_user)
+  = link_to "Make new Solution", new_order_solution_path(@order)
+- if @order.user != current_user
+  #bookmark_link
+    = render :partial => "orders/watchlist/link", :locals => {:include => current_user.watchlist.include?(@order)}
+%h3
+  Solutions:
+%table.sortableTable
+  %thead
+    %tr.tableHeaderRow
+      = render_headings(Solution.headings('solutions'))
+  - if @solutions.nil?
+    %tr
+      %td{ :colspan => Solutions.headings('solutions').size}
+        No items in the list
+  - else
+    - @solutions.each do |solution|
+      %tr{ :class => cycle('odd', 'even')}
+        = render :partial => 'solutions/solution', :locals => {:solution => solution, :columns => Solution.table_columns('solutions')}
+  
+= render :partial => "comments/show", :locals => {:order => @order, :comments => @comments}

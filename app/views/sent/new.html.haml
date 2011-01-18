@@ -1,0 +1,16 @@
+%h2
+  Compose
+- form_for :message, :url => {:controller => "sent", :action => "create"} do |f|
+  %p
+    To:
+    %br
+    = checklist "message[to][]", User.find(:all), :id, :login, @message.to
+  %p
+    Subject:
+    = f.text_field :subject
+  %p
+    Body:
+    %br
+    = f.text_area :body
+  %p
+    = submit_tag "Send"

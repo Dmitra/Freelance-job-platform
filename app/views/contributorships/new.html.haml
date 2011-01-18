@@ -1,0 +1,10 @@
+%h2
+  Contributors of
+  = h @user.login.capitalize
+%h3
+  Choose new contributors for order:
+  = @order.name
+\#TODO Form for multiple update
+- form_tag(:action => "create") do |f|
+  = collection_select( :contributor, :id, @contributors, :id, :login, {:selected => nil, }, {:multiple => true, :size => 10,})
+  = submit_tag "Save"

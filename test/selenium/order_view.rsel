@@ -1,0 +1,4 @@
+o = Order.find(1)
+open '/'
+click_and_wait "link=First sample order"
+order_view({:user => o.user.login, :name => o.name, :status => o.status, :privacy => o.privacy, :desc => o.description, :categories => o.categories.collect(&:name), :cost => o.cost, :created_at => o.created_at.to_s(:datetime), :term => o.term.to_s(:datetime)})

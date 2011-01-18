@@ -1,0 +1,21 @@
+%h2
+  Login with User ID and Password:
+- form_tag session_path do
+  %p
+    %label{ :for => "login" }
+      Login or Email
+    %br
+    = text_field_tag 'login'
+  %p
+    %label{ :for => "password" }
+      Password
+    %br
+    = password_field_tag 'password'
+  %p
+    %label{ :for => "remember_me" }
+      Remember me:
+    = check_box_tag 'remember_me'
+  %p
+    = submit_tag 'Log in'
+    = link_to "Sign Up", new_user_path
+    = link_to "Forgot Password", new_password_path

@@ -1,0 +1,10 @@
+- edit_page = false if edit_page.nil?
+- if !attachment.id.nil?
+  %li{ :id => "attachment_#{attachment.id}" }
+    %a{ :href => attachment.url }
+      = attachment.name
+    (
+    = attachment.file_size/1.kilobyte
+    KB)
+    = link_to_remote "Remove", :url => {:controller => "assets", :action => "destroy", :id => attachment, :edit => edit_page}, :method => :delete, :html => { :title  => "Remove this attachment", :id => "remove" }
+    

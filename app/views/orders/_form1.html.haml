@@ -1,0 +1,52 @@
+%p
+  Category:
+  - categories = Category.all
+  - for i in 0..3 do
+    = f.radio_button :category, i+1, {:onMouseUp => "set_description(#{i})"} 
+    = categories[i].name
+  = link_to_function("[?]", nil, :id => "more1") do |page| page.visual_effect(:toggle_appear, "d1") end
+  %span#d1.details{ :style => "display:none" }
+    Category details
+%p
+  Order Name:
+  = link_to_function("[?]", nil, :id => "more2") do |page| page.visual_effect(:toggle_appear, "d2") end
+  %span#d2.details{ :style => "display:none" }
+    Name details
+%p
+  = error_message_on :order, :name
+  = f.text_area :name, :rows => 1, :cols => 60, :title => "Order Name", :onKeyUp => "return taCount(event, this,'nameCounter',#{Order::NameLimit})", :wrap => "physical"
+%p
+  You have
+  %B
+    %SPAN#nameCounter
+      = if @order.name.nil? then 0 else @order.name.length end
+  of
+  = Order::NameLimit
+  characters for name of the order
+%p
+  Description:
+  %a{ :href => "/template.pdf", :title => "Pdf document", :target => "_blank" }
+    Template
+  = link_to_function("[?]", nil, :id => "more3") do |page| page.visual_effect(:toggle_appear, "d3") end
+  %span#d3.details{ :style => "display:none" }
+    Description details
+= error_message_on :order, :description
+= f.text_area :description, :rows => 4, :cols => 60, :onKeyUp => "return taCount(event, this,'descCounter',#{Order::DescLimit})", :wrap => "physical"
+%p
+  You have
+  %B
+    %SPAN#descCounter
+      = @order.description.length
+  of
+  = Order::DescLimit
+  characters for your description
+%span#brief1{ :style => "display:none" } Brief for Names/Claims
+%span#brief2{ :style => "display:none" } Brief for Writing/Copywriting
+%p
+  Pending Attachments:
+  = render :partial => "assets/edit", :locals => {:attachable => @order}
+%p
+  - unless @order.assets.empty?
+    Attached Files:
+    #attachment_list
+      = render :partial => "assets/attachment", :collection => @order.assets, :locals => {:edit_page => true}

@@ -1,0 +1,9 @@
+%p
+  On this page U can renew your finance account
+- if current_user.finance.nil?
+  = link_to "Set Up your paypal account on this site", add_finance_path
+  \#TODO Paypal account set up
+- else
+  %span.label
+    Paypal account:
+  = current_user.finance.paypal

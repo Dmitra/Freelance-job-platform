@@ -1,0 +1,69 @@
+def login(userlogin)
+#TODO logout only if user to login differ from current logged in
+  unless User.all.collect(&:remember_token).compact.empty?
+    open '/'
+    logout
+  else
+    open '/'
+    click_and_wait "link=Log In"
+  end
+  type "login", userlogin
+  type "password", userlogin
+  click "remember_me"
+  click_and_wait "//input[@value='Log in']"
+  assert_text_present "Logged in successfully"
+end
+def logout
+    click_and_wait "link=Log Out"
+end
+def register userlogin
+  open '/'
+  click_and_wait "link=Sign Up"
+  type "user_login", userlogin
+  type "user_password", userlogin
+  type "user_password_confirmation", userlogin
+  type "user_email", userlogin+"@intelliart.net"
+  click_and_wait "//input[@value='Sign up']"
+  assert_text_present "Thanks for signing up! Please check your email to activate your account before logging in"
+end
+def finance_view opt = {}
+  click_and_wait "link=Your money: #{(opt[:quantity]        || opt[:finance].quantity)}"
+  verify_text_present opt[:paypal]                          || opt[:finance].paypal
+end
+def order_view opt = {}
+  verify_title "*Order: #{(opt[:name]               || opt[:order].name)}"
+  verify_text "//div[@class='status'][1]", "*"+ (opt[:status]   || opt[:order].status)
+  verify_text "//div[@class='status'][2]", "*"+ (opt[:privacy]  || opt[:order].privacy)
+  verify_text "description", opt[:desc]                         || opt[:order].description
+  verify_text "owner", opt[:user]                               || opt[:order].user.login
+  verify_text "categories", (opt[:categories]                   || opt[:order].categories.collect(&:name)).join(", ")
+  verify_text "cost", opt[:cost]                                ||opt[:order].cost
+  verify_text "created_at", (opt[:created_at] || Time.now.to_s(:datetime)).chop.chop+"*"
+  verify_text "term", opt[:term]                                ||opt[:order].term
+end
+def order_create opt = {}
+  click_and_wait "link=Place New Order"
+  type "order_name",              opt[:name]
+  type "order_description",       opt[:desc]
+  select "category_id",           "label="+opt[:categories][0]
+  add_selection "category_id",    "label="+opt[:categories][1]
+  add_selection "category_id",    "label=Create Category"
+  type "order_new_category_name", opt[:categories][2]
+  type "order_cost",              opt[:cost]
+  type "order_term",              opt[:term]
+  select "order_privacy",         "label="+opt[:privacy]
+  if opt[:publish]
+    click_and_wait "name=publish_button"
+  else
+    click_and_wait "name=commit"
+  end
+  verify_text "notice", "Order was successfully created." if opt[:status]   #do not set status for negative test
+end
+def solution_view opt = {}
+  verify_title "Ambitexter - Solution for #{opt[:order]}"
+  verify_text "//div[@class='status'][1]", "*"+opt[:status]
+  verify_text "body", opt[:body]
+  verify_text "description", opt[:desc]
+  verify_text "created_at", (opt[:created_at] || Time.now).to_s(:datetime).chop.chop+"*"
+  verify_text "updated_at", (opt[:updated_at] || Time.now).to_s(:datetime).chop.chop+"*"
+end

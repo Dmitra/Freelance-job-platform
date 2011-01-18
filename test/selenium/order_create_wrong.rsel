@@ -1,0 +1,11 @@
+user = User.find(2)
+login user.login
+options = {:publish => true, :user => user.login, :name => "New order", :desc => "New order description", :cost => "a", :term => (Time.now-3600).to_s(:datetime), :privacy => Order::PRIVACY::RESTRICTED, :categories => %w[book company 12345]}
+order_create options
+
+verify_text_present "Category with name '#{options[:categories][2]}' was ignored"
+verify_text_present "Cost Please, provide value for the charge from $1..$10,000 range"
+verify_text_present "Description The Order with the same description already exists"
+verify_text_present "Term Please, provide term between today and 1 month ahead"
+
+#TODO verify no money withdrawal

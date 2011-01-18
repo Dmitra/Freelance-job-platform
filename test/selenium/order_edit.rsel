@@ -1,0 +1,13 @@
+order = Order.find(8)
+opt = {:order => order, :name => "Another name for Order 8", :cost => (order.cost + 1), :term => (Time.now + 86400).to_s(:datetime), :privacy => Order::PRIVACY::PRIVATE}
+
+login "user"
+click_and_wait "link=#{order.name}"
+click_and_wait "link=Edit"
+type "order_name", opt[:name]
+type "order_cost", opt[:cost]
+type "order_term", opt[:term]
+select "order_privacy", opt[:privacy]
+click_and_wait "name=commit"
+verify_text "notice", "Order was successfully updated."
+order_view opt

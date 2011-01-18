@@ -1,0 +1,81 @@
+- title "Edit Account"
+%h2
+  Edit Your Account
+%p
+  = link_to 'Show Profile', user_path(@user)
+  |
+  = link_to 'Change Password', change_password_path
+= error_messages_for :user
+- form_for :user, :url => user_url(@user), :html => { :method => :put, :multipart => true } do |f|
+  %div{ :style => "float:left;margin-right: 20px;" }
+    %p
+      %label{ :for => "email" }
+        Email
+      %br
+      = f.text_field :email
+    %p
+      %label{ :for => "surname" }
+        Surname
+      %br
+      = f.text_field :surname
+  %div{ :style => "float:right" }
+    %p
+      %label{ :for => "Avatar" }
+        Avatar
+      %br
+      = f.file_field :avatar
+    %p
+      %label{ :for => "Homepage" }
+        Homepage
+      %br
+      = f.text_field :homepage
+    %p
+      %label{ :for => "Portfolio" }
+        Portfolio
+      %br
+      = render :partial => "assets/edit", :locals => {:attachable => @user}
+    %p
+      - unless @user.assets.empty?
+        Attached Files:
+        #attachment_list
+          = render :partial => "assets/attachment", :collection => @user.assets, :locals => {:edit_page => true}
+    %p
+      %label{ :for => "Spam" }
+        Email me about sites notifications
+      %br
+      = f.check_box :spam, :checked => true
+  %div
+    %p
+      %label{ :for => "paypal" }
+        PayPal account
+      %br
+      = text_field_tag	:paypal
+      %p
+        %label{ :for => "birth_date" }
+          Birth date
+        %br
+        = f.calendar_date_select :birth_date, :time => false
+      %p
+        %label{ :for => "gender" }
+          Male
+        = f.radio_button(:gender, true)
+        %label{ :for => "gender" }
+          Female
+        = f.radio_button(:gender, false)
+      %p
+        %label{ :for => "Country" }
+          Country
+        %br
+        = f.country_select(:country)
+        %p
+          %label{ :for => "City" }
+            City
+          %br
+          = f.text_field :city
+  %div{ :style => "float:left" }
+    %p
+      %label{ :for => "About" }
+        About
+      %br
+      = f.text_area :about, :size => "80x10"
+      = submit_tag 'Save'

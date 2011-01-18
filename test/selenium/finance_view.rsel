@@ -1,0 +1,5 @@
+user = User.find(2)
+finance = user.finance
+login user.login
+open '/'
+finance_view :quantity => finance.quantity, :paypal => finance.paypal

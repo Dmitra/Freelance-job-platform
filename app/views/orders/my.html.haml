@@ -1,0 +1,19 @@
+- title "My Orders"
+%h2
+  Watchlist
+  = link_to 'Edit', edit_watchlist_path
+= render :partial => 'orders', :locals => {:orders => @watchlist, :table => 'watchlist'}
+%hr
+%h2
+  Drafts
+  = link_to 'Edit', edit_drafts_path
+= render :partial => 'orders', :locals => {:orders => @drafts, :table => 'drafts'}
+%hr
+%h2
+  Placed orders
+= render :partial => 'orders', :locals => {:orders => @orders, :table => 'orders'}
+%hr
+%h2
+  Solved orders
+= render :partial => 'orders', :locals => {:orders => @solved, :table => 'solved'}
+%hr
