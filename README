@@ -1,3 +1,8 @@
+Business logic of this site can be described as platform for customers and freelancers.
+Customers place orders to make advertisement and freelancers place solutions.
+
+
+rake stats =>
 +----------------------+-------+-------+---------+---------+-----+-------+
 | Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
 +----------------------+-------+-------+---------+---------+-----+-------+
